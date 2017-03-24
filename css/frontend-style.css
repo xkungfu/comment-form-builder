@@ -569,3 +569,21 @@ ul.jFiler-items-list {
 .radio_value_wrapper label, .checkbox_value_wrapper label {
     padding: 0 !important;
 }
+
+/*For Mobile*/
+
+@media only screen and (max-width: 500px) {
+    .cfb_custom_fields_wrapper strong{
+        width: 100%;
+    }
+    .cfb_custom_fields_wrapper .cfb_meta_value {
+        float: inherit;
+        width: 100%;
+    }
+    .cfb_custom_fields_wrapper .cfb_clear {
+        margin-bottom: 10px;
+    }
+    .cfb_custom_fields_wrapper .cfb_clear:last-child {
+        margin-bottom: 0px;
+    }
+}
