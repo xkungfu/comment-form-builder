@@ -1246,9 +1246,9 @@ function cfb_verify_comment_meta_data( $commentdata ) {
 
 					$map_details = array();
 
-					$map_details['long_address'] = !empty( $_POST[$name] ) ? $_POST[$name] : '';
-					$map_details['lat'] = !empty( $_POST[$latitude_name] ) ? $_POST[$latitude_name] : '';
-					$map_details['lng'] = !empty( $_POST[$longitude_name] ) ? $_POST[$longitude_name] : '';
+					$map_details['long_address'] = !empty( $_POST[$name] ) ? sanitize_text_field( $_POST[$name] ) : '';
+					$map_details['lat'] = !empty( $_POST[$latitude_name] ) ? sanitize_text_field( $_POST[$latitude_name] ) : '';
+					$map_details['lng'] = !empty( $_POST[$longitude_name] ) ? sanitize_text_field( $_POST[$longitude_name] ) : '';
 
 					if( count( array_filter( $map_details ) ) < 3 ){
 						$message = esc_html__( 'Please add the address properly' , 'cfb' );
@@ -1352,7 +1352,7 @@ function cfb_verify_comment_meta_data( $commentdata ) {
 
 					require_once __DIR__ . '/../recaptcha/autoload.php';
 
-					$security_code = !empty( $_POST['g-recaptcha-response'] ) ? $_POST['g-recaptcha-response'] : '';
+					$security_code = !empty( $_POST['g-recaptcha-response'] ) ? sanitize_text_field( $_POST['g-recaptcha-response'] ) : '';
 					
 					$secret = esc_html( get_option( 'recaptcha_secret_key' ) );
 					$recaptcha = new \ReCaptcha\ReCaptcha($secret);		
@@ -1368,10 +1368,10 @@ function cfb_verify_comment_meta_data( $commentdata ) {
 				case 'really_simple_captcha':
 
 					$name = $value['name'];
-					$user_input = $_POST[$name];
+					$user_input = sanitize_text_field( $_POST[$name] );
 
 					$db_prefix_name = $name . '_captcha_prefix';
-					$db_prefix = $_POST[$db_prefix_name];
+					$db_prefix = sanitize_text_field( $_POST[$db_prefix_name] );
 
 					$captcha_instance = new ReallySimpleCaptcha();
 					$correct = $captcha_instance->check( $db_prefix, $user_input );
@@ -1556,9 +1556,9 @@ function cfb_save_comment_meta_data( $comment_id, $comment_approved, $commentdat
 
 				$map_details = array();
 
-				$map_details['long_address'] = !empty( $_POST[$name] ) ? $_POST[$name] : '';
-				$map_details['lat'] = !empty( $_POST[$latitude_name] ) ? $_POST[$latitude_name] : '';
-				$map_details['lng'] = !empty( $_POST[$longitude_name] ) ? $_POST[$longitude_name] : '';
+				$map_details['long_address'] = !empty( $_POST[$name] ) ? sanitize_text_field( $_POST[$name] ) : '';
+				$map_details['lat'] = !empty( $_POST[$latitude_name] ) ? sanitize_text_field( $_POST[$latitude_name] ) : '';
+				$map_details['lng'] = !empty( $_POST[$longitude_name] ) ? sanitize_text_field( $_POST[$longitude_name] ) : '';
 
 				/**
 				* For admin edit all fields are not required

@@ -4,8 +4,8 @@
 * Rename meta box title
 */
 
-add_action('in_admin_header','cpt_rename_metaboxes', 9999);
-function cpt_rename_metaboxes(){
+add_action('in_admin_header','cfb_rename_metaboxes', 9999);
+function cfb_rename_metaboxes(){
 	global $wp_meta_boxes;
 	$wp_meta_boxes['comment_form_builder']['side']['core']['submitdiv']['title'] = esc_html__( 'Form Elements', 'cfb' );
 }
@@ -1184,8 +1184,8 @@ function cfb_get_form_elements_html(){
 
 }
 
-add_action( 'add_meta_boxes', 'wpdocs_register_meta_boxes' );
-function wpdocs_register_meta_boxes() {
+add_action( 'add_meta_boxes', 'cfb_register_meta_boxes' );
+function cfb_register_meta_boxes() {
     add_meta_box( 
         'cfb_about_plugin', 
         'Support/Bugs/Extra Features', 

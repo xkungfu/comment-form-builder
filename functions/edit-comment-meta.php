@@ -5,14 +5,14 @@ function cfb_extend_comment_add_meta_box() {
     add_meta_box( 
     	'cfb-comment-edit', 
     	__( 'Comment Metadata - Comment Form Builder' ), 
-    	'extend_comment_meta_box', 
+    	'cfb_extend_comment_meta_box', 
     	'comment', 
     	'normal', 
     	'high' 
     );
 }
 
-function extend_comment_meta_box( $comment ) {
+function cfb_extend_comment_meta_box( $comment ) {
 
 	//echo '<pre>'; print_r($comment); echo '</pre>';
 

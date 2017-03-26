@@ -12,11 +12,11 @@ function cfb_comment_form_options(){
     	'cfb_settings_callback'
     );
 
-    add_action( 'admin_init', 'register_cfb_settings' );
+    add_action( 'admin_init', 'cfb_register_cfb_settings' );
 
 }
 
-function register_cfb_settings() {
+function cfb_register_cfb_settings() {
 	
 	$settings = array(
 		array(
