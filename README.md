@@ -22,3 +22,12 @@ It is a wordpress plugin where you can add custom fields on comments with drag a
    
 4. Create unlimited custom fields.
 5. Options to show custom fields to admin only ( frontend ).
+
+## Changelogs
+
+### Development
+
+* New : Hide Predefine Fields ( Name, Email & Website )
+
+### 0.1
+* Initial Commit
