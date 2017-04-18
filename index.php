@@ -73,7 +73,7 @@ function cfb_check_comment_form(){
 
 	$query = new WP_Query( $args );
 
-	if( $query->have_posts() && cfb_is_plugin_active( 'comment-form-builder-pro-addons/index.php' ) == false ):
+	if( $query->have_posts() && cfb_is_plugin_active( 'pro-addons-comment-form-builder/index.php' ) == false ):
 		return false;
 	else:
 		return true;
@@ -138,7 +138,7 @@ function cfb_frontend_scripts() {
     $translation_array = array(
 		'rules' => cfb_get_validation_rules( $post ),
 		'messages' => cfb_get_validation_messages( $post ),
-		'pro_version' => cfb_is_plugin_active( 'comment-form-builder-pro-addons/index.php' ) ? 'active' : 'inactive',
+		'pro_version' => cfb_is_plugin_active( 'pro-addons-comment-form-builder/index.php' ) ? 'active' : 'inactive',
 		'comment_form_id' => get_option( 'cfb_comment_form_id' ),
 		'offset' => get_option( 'cfb_error_offset' , 50 )
 
@@ -152,7 +152,7 @@ function cfb_frontend_scripts() {
 
 function cfb_scripts_frontend_back(){
 
-	if( cfb_is_plugin_active( 'comment-form-builder-pro-addons/index.php' ) ){
+	if( cfb_is_plugin_active( 'pro-addons-comment-form-builder/index.php' ) ){
 
 		$google_map_api = get_option( 'google_map_api' );
 
@@ -466,7 +466,7 @@ function cfb_notice_pro_version() {
 	cfb_update_notice_settings();
 
 	global $post;
-	$status = is_plugin_active( 'comment-form-builder-pro-addons/index.php' );
+	$status = is_plugin_active( 'pro-addons-comment-form-builder/index.php' );
 	$screen = get_current_screen();
 	//echo '<pre>'; print_r($screen); echo '</pre>';
 

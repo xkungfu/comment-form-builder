@@ -122,7 +122,7 @@ function cfb_settings_callback(){
 		        </tr>
 
 		        <?php 
-		        if( is_plugin_active( 'comment-form-builder-pro-addons/index.php' ) ){ ?>
+		        if( is_plugin_active( 'pro-addons-comment-form-builder/index.php' ) ){ ?>
 
 			        <tr valign="top">
 			    		<th scope="row" class="heading">API's</th>

@@ -23,7 +23,7 @@
 .cfb_custom_fields_wrapper button.button {
     margin-bottom: 5px !important;
     text-transform: capitalize;
-    /*margin-right: 4px;*/
+    margin-right: 4px;
 }
 .mt-0 {
     margin-top: 0px !important;
@@ -297,12 +297,12 @@
     padding-bottom: 10px;
 }
 .cf_author_name_field .wpuf-actions {
-    display: none;
+    /*display: none;*/
 }
 .cf_author_name_field .wpuf-form-holder-2 {
     display: none;
 }
-.cf_author_name_field .wpuf-legend,.cf_author_email_field .wpuf-legend,.cf_author_website_field .wpuf-legend,.cf_author_comment_field .wpuf-legend{
+.cf_author_name_field,.cf_author_email_field,.cf_author_website_field,.cf_author_comment_field .wpuf-legend{
     border-bottom: 3px solid #0073aa !important;
 }
 .cf_section_break ~ li:not(.cf_section_break) {
@@ -928,4 +928,7 @@ body .ui-tooltip { border-width:2px; }
 }
 .wpcb_about_us .small {
     font-size: 13px;
+}
+#preview-action{
+    display: none;
 }

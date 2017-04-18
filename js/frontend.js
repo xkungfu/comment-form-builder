@@ -65,7 +65,7 @@ function validateCommentForm(){
 	        setTimeout(function(){ 
 
 	        	jQuery('html, body').animate({
-		            scrollTop: jQuery( validator.errorList[0].element.closest('p') ).offset().top - cfb_object.offset
+		            scrollTop: jQuery( validator.errorList[0].element.closest('p,div') ).offset().top - cfb_object.offset
 		        }, 1000);	
 
 	       	}, 100);

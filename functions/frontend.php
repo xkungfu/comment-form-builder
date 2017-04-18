@@ -728,7 +728,7 @@ function cfb_get_extra_fields( $post = null , $comment_id = null ) {
 
 				case 'google_maps':
 
-					if( !cfb_is_plugin_active( 'comment-form-builder-pro-addons/index.php' ) ){
+					if( !cfb_is_plugin_active( 'pro-addons-comment-form-builder/index.php' ) ){
 						continue;
 					}
 
@@ -774,7 +774,7 @@ function cfb_get_extra_fields( $post = null , $comment_id = null ) {
 
 				case 'date':
 
-					if( !cfb_is_plugin_active( 'comment-form-builder-pro-addons/index.php' ) ){
+					if( !cfb_is_plugin_active( 'pro-addons-comment-form-builder/index.php' ) ){
 						continue;
 					}
 
@@ -783,7 +783,7 @@ function cfb_get_extra_fields( $post = null , $comment_id = null ) {
 
 				case 'taxonomy':
 
-					if( !cfb_is_plugin_active( 'comment-form-builder-pro-addons/index.php' ) ){
+					if( !cfb_is_plugin_active( 'pro-addons-comment-form-builder/index.php' ) ){
 						continue;
 					}
 
@@ -811,7 +811,7 @@ function cfb_get_extra_fields( $post = null , $comment_id = null ) {
 
 				case 'file_upload':
 
-					if( !cfb_is_plugin_active( 'comment-form-builder-pro-addons/index.php' ) ){
+					if( !cfb_is_plugin_active( 'pro-addons-comment-form-builder/index.php' ) ){
 						continue;
 					}
 
@@ -821,7 +821,7 @@ function cfb_get_extra_fields( $post = null , $comment_id = null ) {
 
 				case 'user_image':
 
-					if( !cfb_is_plugin_active( 'comment-form-builder-pro-addons/index.php' ) ){
+					if( !cfb_is_plugin_active( 'pro-addons-comment-form-builder/index.php' ) ){
 						continue;
 					}
 
@@ -831,7 +831,7 @@ function cfb_get_extra_fields( $post = null , $comment_id = null ) {
 
 				case 'reCaptcha':
 
-					if( !cfb_is_plugin_active( 'comment-form-builder-pro-addons/index.php' ) || is_admin() ){
+					if( !cfb_is_plugin_active( 'pro-addons-comment-form-builder/index.php' ) || is_admin() ){
 						continue;
 					}
 
@@ -841,7 +841,7 @@ function cfb_get_extra_fields( $post = null , $comment_id = null ) {
 
 				case 'really_simple_captcha':
 
-					if( !cfb_is_plugin_active( 'comment-form-builder-pro-addons/index.php' ) || is_admin() ){
+					if( !cfb_is_plugin_active( 'pro-addons-comment-form-builder/index.php' ) || is_admin() ){
 						continue;
 					}
 
@@ -899,11 +899,13 @@ function cfb_array_insert(&$array, $position, $insert) {
 * Move predefine comment field ( Name, email and website )
 */
 
-function cfb_insert_predefined_comment_fields( $fields , $extra_fields , $temp_name , $temp_email , $temp_url ){
+function cfb_insert_predefined_comment_fields( $fields , $extra_fields , $temp_name , $temp_email , $temp_url , $temp_comment ){
 
 	if( !empty( $extra_fields ) && is_array( $extra_fields ) ){
 
 		foreach ( $extra_fields as $key => $value ) {
+
+			//echo $value['type'] . ' ';
 			
 			if( $value['type'] == 'name' ){
 				cfb_array_insert( $fields, $key , $temp_name );
@@ -911,12 +913,14 @@ function cfb_insert_predefined_comment_fields( $fields , $extra_fields , $temp_n
 				cfb_array_insert( $fields, $key , $temp_email );
 			} elseif( $value['type'] == 'website' ){
 				cfb_array_insert( $fields, $key , $temp_url );
+			} elseif( $value['type'] == 'comment' ){
+				cfb_array_insert( $fields, $key , $temp_comment );
 			}
 
 		}
 
 	}
-
+	//$fields['comment_field']
 	return $fields;
 
 }
@@ -990,16 +994,21 @@ function cfb_remove_comment_key( $extra_fields ){
 
 }
 
+
+
+
+
 /**
 * Get all comment fields
 */
 
-add_filter( 'comment_form_default_fields','cfb_add_comment_fields' );
+add_filter( 'comment_form_fields' , 'cfb_add_comment_fields' );
+//add_filter( 'comment_form_default_fields','cfb_add_comment_fields' );
 
 function cfb_add_comment_fields( $custom_fields ) {
 
 	global $post;
-	
+
 	$comment_form_id = cfb_get_comment_form_id( $post );
 
 	if( $comment_form_id == false ){
@@ -1009,13 +1018,14 @@ function cfb_add_comment_fields( $custom_fields ) {
 	$temp_name = $custom_fields['author'];
 	$temp_email = $custom_fields['email'];
 	$temp_url = $custom_fields['url'];
+	$temp_comment = $custom_fields[0];
 
 	$extra_fields = get_post_meta( $comment_form_id , 'comment_custom_fields' , true );
-	$extra_fields = is_array( $extra_fields ) ? cfb_remove_comment_key( $extra_fields ) : cfb_remove_comment_key( array() );
+	//$extra_fields = is_array( $extra_fields ) ? cfb_remove_comment_key( $extra_fields ) : cfb_remove_comment_key( array() );
 
     $fields = cfb_get_extra_fields();
-    unset( $fields['comment_field'] , $fields['website_field'] );
-    $fields = cfb_insert_predefined_comment_fields( $fields , $extra_fields , $temp_name , $temp_email , $temp_url );
+    unset( $fields['website_field'] );
+    $fields = cfb_insert_predefined_comment_fields( $fields , $extra_fields , $temp_name , $temp_email , $temp_url , $temp_comment );
 
     return $fields;
 
@@ -1114,7 +1124,7 @@ function cfb_verify_comment_meta_data( $commentdata ) {
 
 				case 'taxonomy':
 
-					if( !cfb_is_plugin_active( 'comment-form-builder-pro-addons/index.php' ) ){
+					if( !cfb_is_plugin_active( 'pro-addons-comment-form-builder/index.php' ) ){
 						continue;
 					}
 
@@ -1168,7 +1178,7 @@ function cfb_verify_comment_meta_data( $commentdata ) {
 
 				case 'date':
 
-					if( !cfb_is_plugin_active( 'comment-form-builder-pro-addons/index.php' ) ){
+					if( !cfb_is_plugin_active( 'pro-addons-comment-form-builder/index.php' ) ){
 						continue;
 					}
 
@@ -1192,7 +1202,7 @@ function cfb_verify_comment_meta_data( $commentdata ) {
 
 				case 'file_upload':
 
-					if( !cfb_is_plugin_active( 'comment-form-builder-pro-addons/index.php' ) ){
+					if( !cfb_is_plugin_active( 'pro-addons-comment-form-builder/index.php' ) ){
 						continue;
 					}
 
@@ -1210,7 +1220,7 @@ function cfb_verify_comment_meta_data( $commentdata ) {
 
 				case 'user_image':
 
-					if( !cfb_is_plugin_active( 'comment-form-builder-pro-addons/index.php' ) ){
+					if( !cfb_is_plugin_active( 'pro-addons-comment-form-builder/index.php' ) ){
 						continue;
 					}
 
@@ -1236,7 +1246,7 @@ function cfb_verify_comment_meta_data( $commentdata ) {
 
 				case 'google_maps':
 
-					if( !cfb_is_plugin_active( 'comment-form-builder-pro-addons/index.php' ) ){
+					if( !cfb_is_plugin_active( 'pro-addons-comment-form-builder/index.php' ) ){
 						continue;
 					}
 
@@ -1308,7 +1318,7 @@ function cfb_verify_comment_meta_data( $commentdata ) {
 
 				case 'date':
 
-					if( !cfb_is_plugin_active( 'comment-form-builder-pro-addons/index.php' ) ){
+					if( !cfb_is_plugin_active( 'pro-addons-comment-form-builder/index.php' ) ){
 						continue;
 					}
 					
@@ -1332,7 +1342,7 @@ function cfb_verify_comment_meta_data( $commentdata ) {
 
 				case 'file_upload':
 
-					if( !cfb_is_plugin_active( 'comment-form-builder-pro-addons/index.php' ) ){
+					if( !cfb_is_plugin_active( 'pro-addons-comment-form-builder/index.php' ) ){
 						continue;
 					}
 
@@ -1346,7 +1356,7 @@ function cfb_verify_comment_meta_data( $commentdata ) {
 
 				case 'reCaptcha':
 
-					if( !cfb_is_plugin_active( 'comment-form-builder-pro-addons/index.php' ) ){
+					if( !cfb_is_plugin_active( 'pro-addons-comment-form-builder/index.php' ) ){
 						continue;
 					}
 
@@ -1696,7 +1706,7 @@ function cfb_modify_comment( $text ){
 
 				case 'taxonomy':
 
-					if( !cfb_is_plugin_active( 'comment-form-builder-pro-addons/index.php' ) )
+					if( !cfb_is_plugin_active( 'pro-addons-comment-form-builder/index.php' ) )
 						continue;
 
 					if( !empty( $value['show_to_admin'] ) && !current_user_can('administrator') ){
@@ -1713,7 +1723,7 @@ function cfb_modify_comment( $text ){
 
 				case 'file_upload':
 
-					if( !cfb_is_plugin_active( 'comment-form-builder-pro-addons/index.php' ) )
+					if( !cfb_is_plugin_active( 'pro-addons-comment-form-builder/index.php' ) )
 						continue;
 
 					if( !empty( $value['show_to_admin'] ) && !current_user_can('administrator') ){
@@ -1734,7 +1744,7 @@ function cfb_modify_comment( $text ){
 
 				case 'google_maps':
 
-					if( !cfb_is_plugin_active( 'comment-form-builder-pro-addons/index.php' ) )
+					if( !cfb_is_plugin_active( 'pro-addons-comment-form-builder/index.php' ) )
 						continue;
 
 					if( !empty( $value['show_to_admin'] ) && !current_user_can('administrator') ){
@@ -1889,7 +1899,7 @@ function cfb_get_choices_to_array( $value ){
 
 	/* Filter Choices */
 
-	if( !empty( $value['type'] ) && $value['type'] == 'taxonomy' && cfb_is_plugin_active( 'comment-form-builder-pro-addons/index.php' ) ){
+	if( !empty( $value['type'] ) && $value['type'] == 'taxonomy' && cfb_is_plugin_active( 'pro-addons-comment-form-builder/index.php' ) ){
 		$choices = cfb_get_taxonomy_choices( $value );
 	} else {
 		$choices = !empty( $value['choices'] ) ? esc_html( $value['choices'] ) : '';
@@ -1922,3 +1932,85 @@ function cfb_get_choices_to_array( $value ){
 	return $radio_choices;
 
 }
+
+/**
+* Hide Name, Email, Comment and Website
+*/
+
+add_action( 'wp_footer' , 'cfb_hide_predefined_fields' );
+function cfb_hide_predefined_fields(){
+
+	if( is_single() || is_page() ){
+
+		global $post;
+		
+		$comment_form_id = cfb_get_comment_form_id( $post );
+		$data = array();
+
+		if( is_numeric( $comment_form_id ) ){ 
+
+			$comment_form_details = get_post_meta( $comment_form_id, 'comment_custom_fields', true ); 
+
+			if( !empty( $comment_form_details ) && is_array( $comment_form_details ) ){
+
+				echo '<script>
+				jQuery( document ).ready(function(){';
+
+				foreach( $comment_form_details as $value ){
+
+					switch ( $value['type'] ) {
+
+						case 'name':
+							
+							if( !empty( $value['hide_field'] ) ){
+
+								$default_name = !empty( $value['default'] ) ? esc_html( $value['default'] ) : 'Anonymous';
+
+								echo "jQuery( '[name=author]' ).val( '" . $default_name . "' );";
+								echo "jQuery( '[name=author]' ).hide();";
+								echo "jQuery( '[name=author]' ).closest( 'p,div' ).hide();";
+							}
+
+							break;
+
+						case 'predefined_email':
+							
+							if( !empty( $value['hide_field'] ) ){
+
+								$default_name = !empty( $value['default'] ) ? sanitize_email( $value['default'] ) : 'anonymous@gmail.com';
+
+								echo "jQuery( '[name=email]' ).val( '" . $default_name . "' );";
+								echo "jQuery( '[name=email]' ).hide();";
+								echo "jQuery( '[name=email]' ).closest( 'p,div' ).hide();";
+							}
+
+							break;
+
+						case 'website':
+							
+							if( !empty( $value['hide_field'] ) ){
+
+								$default_name = !empty( $value['default'] ) ? esc_url( $value['default'] ) : '';
+
+								echo "jQuery( '[name=url]' ).val( '" . $default_name . "' );";
+								echo "jQuery( '[name=url]' ).hide();";
+								echo "jQuery( '[name=url]' ).closest( 'p,div' ).hide();";
+							}
+
+							break;
+						
+						default:
+							# code...
+							break;
+					}
+
+				}
+
+				echo '});</script>';
+
+			}
+
+		}
+
+	}
+} 

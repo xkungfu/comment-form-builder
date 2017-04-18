@@ -61,21 +61,50 @@ function cfb_screen_editor_callback( $post ) { ?>
 	<?php
 }
 
+function cfb_get_input_hide_field( $count , $value ){ ?>
+    
+    <div class="wpuf-form-rows required-field">
+                
+        <label>&nbsp;</label>
+
+        <div class="wpuf-form-sub-fields">
+            <label>
+                <input 
+                type="checkbox" 
+                name="cfb_input[<?php echo $count; ?>][hide_field]" 
+                value="1"
+                <?php checked( ( $value ? 1 : 0 ) , 1 ); ?>> Hide Field
+            </label>
+        </div>
+
+    </div>
+
+    <?php
+}
+
 function cfb_get_author_name_backend( $count , $type , $value = null ){ ?>
 
     <li class="custom_field cf_author_name_field">
 
         <div class="wpuf-legend" title="Click and Drag to rearrange">
             <div class="wpuf-label"><?php echo ucfirst( str_replace( '_' , ' ' , $type ) ); ?></div>
-        </div>  
+            <div class="wpuf-actions">
+                <a href="javascript:void(0)" class="wpuf-toggle">Toggle</a>
+            </div>
+        </div> 
 
-        <div class="wpuf-form-holder-2">
+        <div class="wpuf-form-holder" style="display: block;">
             
             <?php 
+
+            $default = !empty( $value['default'] ) ? esc_html( $value['default'] ) : 'Anonymous';
+
+            cfb_get_input_default_value( $count , $default , $required = true );
+            cfb_get_input_hide_field( $count , (!empty( $value['hide_field'] ) ? 1 : 0) );
             cfb_get_input_type( $count, $type );
             ?>                  
                                 
-        </div>
+        </div> 
 
     </li>
 
@@ -88,15 +117,23 @@ function cfb_get_author_email_backend( $count , $type , $value = null ){ ?>
 
         <div class="wpuf-legend" title="Click and Drag to rearrange">
             <div class="wpuf-label"><?php echo ucfirst( str_replace( '_' , ' ' , 'Email' ) ); ?></div>
+            <div class="wpuf-actions">
+                <a href="javascript:void(0)" class="wpuf-toggle">Toggle</a>
+            </div>
         </div>  
 
-        <div class="wpuf-form-holder-2">
+        <div class="wpuf-form-holder" style="display: block;">
             
             <?php 
+
+            $default = !empty( $value['default'] ) ? esc_html( $value['default'] ) : 'anonymous@gmail.com';
+
+            cfb_get_input_default_value( $count , $default , $required = true , $input_type = 'email' );
+            cfb_get_input_hide_field( $count , (!empty( $value['hide_field'] ) ? 1 : 0) );
             cfb_get_input_type( $count, $type );
             ?>                  
                                 
-        </div>
+        </div> 
 
     </li>
 
@@ -109,15 +146,23 @@ function cfb_get_author_website_backend( $count , $type , $value = null ){ ?>
 
         <div class="wpuf-legend" title="Click and Drag to rearrange">
             <div class="wpuf-label"><?php echo ucfirst( str_replace( '_' , ' ' , $type ) ); ?></div>
+            <div class="wpuf-actions">
+                <a href="javascript:void(0)" class="wpuf-toggle">Toggle</a>
+            </div>
         </div>  
 
-        <div class="wpuf-form-holder-2">
+        <div class="wpuf-form-holder" style="display: block;">
             
             <?php 
+
+            $default = !empty( $value['default'] ) ? esc_url( $value['default'] ) : '';
+
+            cfb_get_input_default_value( $count , $default , $required = false , $input_type = 'url' );
+            cfb_get_input_hide_field( $count , (!empty( $value['hide_field'] ) ? 1 : 0) );
             cfb_get_input_type( $count, $type );
             ?>                  
                                 
-        </div>
+        </div> 
 
     </li>
 
@@ -219,49 +264,49 @@ function cfb_get_saved_comment_custom_field( $post ){
 
             case 'taxonomy':
 
-                if( is_plugin_active( 'comment-form-builder-pro-addons/index.php' ) )
+                if( is_plugin_active( 'pro-addons-comment-form-builder/index.php' ) )
                     cfb_get_taxonomy_backend( $key , $type = 'taxonomy' , $value , $value['taxonomy'] );
 
                 break;
 
             case 'date':
 
-                if( is_plugin_active( 'comment-form-builder-pro-addons/index.php' ) )
+                if( is_plugin_active( 'pro-addons-comment-form-builder/index.php' ) )
                     cfb_get_date_backend( $key , $type = 'date' , $value );
 
                 break;
 
             case 'file_upload':
 
-                if( is_plugin_active( 'comment-form-builder-pro-addons/index.php' ) )
+                if( is_plugin_active( 'pro-addons-comment-form-builder/index.php' ) )
                     cfb_get_file_upload_backend( $key , $type = 'file_upload' , $value );
 
                 break;
 
             case 'user_image':
 
-                if( is_plugin_active( 'comment-form-builder-pro-addons/index.php' ) )
+                if( is_plugin_active( 'pro-addons-comment-form-builder/index.php' ) )
                     cfb_get_user_image_backend( $key , $type = 'user_image' , $value );
                 
                 break;
 
             case 'google_maps':
 
-                if( is_plugin_active( 'comment-form-builder-pro-addons/index.php' ) )
+                if( is_plugin_active( 'pro-addons-comment-form-builder/index.php' ) )
                     cfb_get_google_maps_backend( $key , $type = 'google_maps' , $value );
 
                 break;
 
             case 'reCaptcha':
 
-                if( is_plugin_active( 'comment-form-builder-pro-addons/index.php' ) )
+                if( is_plugin_active( 'pro-addons-comment-form-builder/index.php' ) )
                     cfb_get_recaptcha_backend( $key , $type = 'reCaptcha' , $value );
 
                 break;
 
             case 'really_simple_captcha':
 
-                if( is_plugin_active( 'comment-form-builder-pro-addons/index.php' ) )
+                if( is_plugin_active( 'pro-addons-comment-form-builder/index.php' ) )
                     cfb_get_really_simple_captcha_backend( $key , $type = 'really_simple_captcha' , $value );
 
                 break;
@@ -438,10 +483,15 @@ function cfb_get_input_placeholder( $count , $value ){ ?>
 	<?php
 }
 
-function cfb_get_input_default_value( $count , $value ){ ?>
+function cfb_get_input_default_value( $count , $value , $required = false , $type = 'text' ){ ?>
 	<div class="wpuf-form-rows">
-        <label>Default value</label>
-        <input type="text" class="" name="cfb_input[<?php echo $count; ?>][default]" title="" value="<?php echo $value; ?>">
+        <label>Default value <?php echo ( $required == true ? '<span class="required"> *</span>' : '' );  ?></label>
+        <input 
+        type="<?php echo $type; ?>" 
+        class="" 
+        name="cfb_input[<?php echo $count; ?>][default]" 
+        <?php echo ( $required == true ? 'required' : '' );  ?>  
+        value="<?php echo $value; ?>">
     </div>
 	<?php
 }
