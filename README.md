@@ -23,7 +23,7 @@ It is a wordpress plugin where you can add custom fields on comments with drag a
 4. Create unlimited custom fields.
 5. Options to show custom fields to admin only ( frontend ).
 
-## Changelogs
+## Changelog
 
 ### Development
 
