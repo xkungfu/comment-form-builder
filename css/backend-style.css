@@ -302,7 +302,7 @@
 .cf_author_name_field .wpuf-form-holder-2 {
     display: none;
 }
-.cf_author_name_field,.cf_author_email_field,.cf_author_website_field,.cf_author_comment_field .wpuf-legend{
+.cf_author_name_field,.cf_author_email_field,.cf_author_website_field,.cf_author_comment_field{
     border-bottom: 3px solid #0073aa !important;
 }
 .cf_section_break ~ li:not(.cf_section_break) {

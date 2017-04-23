@@ -63,6 +63,10 @@ function cfb_screen_editor_callback( $post ) { ?>
 
 function cfb_get_input_hide_field( $count , $value ){ ?>
     
+    <div class="wpuf-form-rows">
+        <label>&nbsp;</label>
+        <p class="description">The default value will be used if below <code>Hide Field</code> label is checked.</p>
+    </div>
     <div class="wpuf-form-rows required-field">
                 
         <label>&nbsp;</label>
@@ -98,7 +102,9 @@ function cfb_get_author_name_backend( $count , $type , $value = null ){ ?>
             <?php 
 
             $default = !empty( $value['default'] ) ? esc_html( $value['default'] ) : 'Anonymous';
+            $label = !empty( $value['label'] ) ? esc_html( $value['label'] ) : 'Name';
 
+            cfb_get_field_input_label( $count , $label );
             cfb_get_input_default_value( $count , $default , $required = true );
             cfb_get_input_hide_field( $count , (!empty( $value['hide_field'] ) ? 1 : 0) );
             cfb_get_input_type( $count, $type );
@@ -127,6 +133,9 @@ function cfb_get_author_email_backend( $count , $type , $value = null ){ ?>
             <?php 
 
             $default = !empty( $value['default'] ) ? esc_html( $value['default'] ) : 'anonymous@gmail.com';
+            $label = !empty( $value['label'] ) ? esc_html( $value['label'] ) : 'Email';
+
+            cfb_get_field_input_label( $count , $label );
 
             cfb_get_input_default_value( $count , $default , $required = true , $input_type = 'email' );
             cfb_get_input_hide_field( $count , (!empty( $value['hide_field'] ) ? 1 : 0) );
@@ -156,6 +165,9 @@ function cfb_get_author_website_backend( $count , $type , $value = null ){ ?>
             <?php 
 
             $default = !empty( $value['default'] ) ? esc_url( $value['default'] ) : '';
+            $label = !empty( $value['label'] ) ? esc_html( $value['label'] ) : 'Website';
+
+            cfb_get_field_input_label( $count , $label );
 
             cfb_get_input_default_value( $count , $default , $required = false , $input_type = 'url' );
             cfb_get_input_hide_field( $count , (!empty( $value['hide_field'] ) ? 1 : 0) );
@@ -175,15 +187,27 @@ function cfb_get_author_comment_backend( $count , $type , $value = null ){ ?>
 
         <div class="wpuf-legend" title="Click and Drag to rearrange">
             <div class="wpuf-label"><?php echo ucfirst( str_replace( '_' , ' ' , $type ) ); ?></div>
+            <div class="wpuf-actions">
+                <a href="javascript:void(0)" class="wpuf-toggle">Toggle</a>
+            </div>
         </div>  
 
-        <div class="wpuf-form-holder-2">
+        <div class="wpuf-form-holder" style="display: block;">
             
             <?php 
+
+            $default = !empty( $value['default'] ) ? esc_html( $value['default'] ) : 'This is a test comment';
+
+            $label = !empty( $value['label'] ) ? esc_html( $value['label'] ) : 'Comment';
+
+            cfb_get_field_input_label( $count , $label );
+
+            cfb_get_input_default_value( $count , $default , $required = true , $input_type = 'text' );
+            cfb_get_input_hide_field( $count , (!empty( $value['hide_field'] ) ? 1 : 0) );
             cfb_get_input_type( $count, $type );
             ?>                  
                                 
-        </div>
+        </div> 
 
     </li>
 

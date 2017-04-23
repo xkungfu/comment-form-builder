@@ -1780,9 +1780,9 @@ function cfb_modify_comment( $text ){
 	$position = get_option( 'cfb_show_custom_fields_position' , 'after_comment' );
 
 	if( $position == 'after_comment' ){
-		return '<p>' . $text . '</p>' . $extra_fields_html . '</div>';
+		return '<p class="comment_description">' . $text . '</p>' . $extra_fields_html . '</div>';
 	} else {
-		return $extra_fields_html . '<div class="cfb-mb-10"></div><p>' . $text . '</p></div>';
+		return $extra_fields_html . '<div class="cfb-mb-10"></div><p class="comment_description">' . $text . '</p></div>';
 	}	
 
 }
@@ -1969,7 +1969,13 @@ function cfb_hide_predefined_fields(){
 								echo "jQuery( '[name=author]' ).val( '" . $default_name . "' );";
 								echo "jQuery( '[name=author]' ).hide();";
 								echo "jQuery( '[name=author]' ).closest( 'p,div' ).hide();";
+
 							}
+
+							$label = !empty( $value['label'] ) ? esc_html( $value['label'] ) : 'Name';
+							$label = $label . '<span class="required"> *</span>'; 
+
+							echo "jQuery( '.comment-form-author label[for=author]' ).html('" . $label . "');";
 
 							break;
 
@@ -1984,6 +1990,11 @@ function cfb_hide_predefined_fields(){
 								echo "jQuery( '[name=email]' ).closest( 'p,div' ).hide();";
 							}
 
+							$label = !empty( $value['label'] ) ? esc_html( $value['label'] ) : 'Email';
+							$label = $label . '<span class="required"> *</span>'; 
+							
+							echo "jQuery( '.comment-form-email label[for=email]' ).html('" . $label . "');";
+
 							break;
 
 						case 'website':
@@ -1996,6 +2007,33 @@ function cfb_hide_predefined_fields(){
 								echo "jQuery( '[name=url]' ).hide();";
 								echo "jQuery( '[name=url]' ).closest( 'p,div' ).hide();";
 							}
+
+							$label = !empty( $value['label'] ) ? esc_html( $value['label'] ) : 'Website';
+							
+							echo "jQuery( '.comment-form-url label[for=url]' ).html('" . $label . "');";
+
+							break;
+
+						case 'comment':
+							
+							if( !empty( $value['hide_field'] ) ){
+
+								$default_name = !empty( $value['default'] ) ? esc_html( $value['default'] ) : 'This is a test comment';
+								$default_name = $default_name . rand(0,999999999999);
+
+								echo "jQuery( '[name=comment]' ).val( '" . $default_name . "' );";
+								echo "jQuery( '[name=comment]' ).hide();";
+								echo "jQuery( '[name=comment]' ).closest( 'p,div' ).hide();";
+								echo "jQuery( '.comment_description' ).css( 'display', 'none' );";
+								echo "window.commentHide = true;";
+								echo "window.commentDefaultValue = '" . $default_name . "';";
+
+							}
+
+							$label = !empty( $value['label'] ) ? esc_html( $value['label'] ) : 'Comment';
+							$label = $label . '<span class="required"> *</span>'; 
+							
+							echo "jQuery( '.comment-form-comment label[for=comment]' ).html('" . $label . "');";
 
 							break;
 						

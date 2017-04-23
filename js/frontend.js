@@ -117,3 +117,25 @@ jQuery.validator.addMethod( "multi_select", function( value, element , params ) 
 
     return count > 0;
 });
+
+/**
+* Display comment textarea when click on the comment reply link
+*/
+
+jQuery( document ).on( 'click' , '.comment-reply-link' , function(){
+
+	jQuery( 'ol #respond [name=comment],ul #respond [name=comment]' ).val('');
+	jQuery( 'ol #respond [name=comment],ul #respond [name=comment]' ).show();
+	jQuery( 'ol #respond [name=comment],ul #respond [name=comment]' ).closest( 'p,div' ).show();
+
+});
+
+jQuery( document ).on( 'click' , '#cancel-comment-reply-link' , function(){
+
+	if( window.commentHide == true ){
+		var commentDefaultValue = window.commentDefaultValue;
+		jQuery( '[name=comment]' ).val( commentDefaultValue );
+		jQuery( '[name=comment]' ).closest( 'p,div' ).hide();
+	}
+
+});
