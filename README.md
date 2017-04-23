@@ -27,7 +27,8 @@ It is a wordpress plugin where you can add custom fields on comments with drag a
 
 ### Development
 
-* New : Hide Predefine Fields ( Name, Email & Website )
+* New : Hide Predefine Fields ( Name, Email, Website & Comment )
+* New : Change labels of predefined fields ( Name, Email, Website & Comment )
 
 ### 0.1
 * Initial Commit
